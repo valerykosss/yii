@@ -18,7 +18,7 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'class' => 'app\components\User', // extend User component
+            // 'class' => 'app\components\User', // extend User component
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         'session' => [

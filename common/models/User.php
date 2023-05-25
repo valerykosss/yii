@@ -8,6 +8,8 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
+use app\models\Dress;
+
 /**
  * User model
  *
@@ -209,5 +211,29 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+
+    public function getUserDresses(){
+        // $userDresses = Dress::find() 
+        // ->join('inner join', 
+        //        'dressType',
+        //        'dressType.dressTypeId = dress.dressTypeId'
+        //    )
+        // ->join('inner join', 
+        //        'color',
+        //        'color.colorId = dress.colorId'
+        //    )->all();
+
+        $userDresses = Dress::find()
+            ->select('dress.*')
+            ->innerJoin('dressType', 'dress.dressTypeId = dressType.dressTypeId')
+            ->innerJoin('color', 'dress.colorId = color.colorId')
+            ->innerJoin('material', 'dress.materialId = material.materialId')
+            ->where(['Dress.UserId'=> $this->getId()])
+            ->all();
+
+
+        return $userDresses;
     }
 }
